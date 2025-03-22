@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es" style="background-color: #020408;">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="img/flowers.png" type="image/x-icon">
+    <title>Flowers</title>
+</head>
+
+<body>
+    <!-- Background langit malam -->
+    <div class="night"></div>
+    
+    <!-- Bintang-bintang berkedip -->
+    <div class="blinking-star star-1"></div>
+    <div class="blinking-star star-2"></div>
+    <div class="blinking-star star-3"></div>
+    <div class="blinking-star star-4"></div>
+    <div class="blinking-star star-5"></div>
+    
+    <div class="description">
+        <span class="glowing-text">Sayang ako Ochakoo, aku mau ngomong sebentar</span>
+    </div>
+    <div class="button-container" id="flowerButton">
+        <a href="flower.html" id="flowerLink">
+            <img src="img/buttonpixel.png" alt="Click Aquí" class="pixel-button">
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const flowerButton = document.getElementById('flowerButton');
+            const flowerLink = document.getElementById('flowerLink');
+            const pixelButton = document.querySelector('.pixel-button');
+            
+            // Tambahkan efek klik dengan bayangan yang lebih dinamis
+            flowerButton.addEventListener('mousedown', function() {
+                // Tambahkan elemen bayangan di sekitar tombol
+                const shadowElements = [];
+                for (let i = 0; i < 8; i++) {
+                    const shadow = document.createElement('div');
+                    shadow.className = 'click-shadow';
+                    shadow.style.position = 'absolute';
+                    shadow.style.width = '10px';
+                    shadow.style.height = '10px';
+                    shadow.style.borderRadius = '50%';
+                    shadow.style.backgroundColor = 'rgba(228, 31, 123, 0.7)';
+                    shadow.style.filter = 'blur(5px)';
+                    shadow.style.zIndex = '-1';
+                    
+                    // Posisi awal di sekitar tombol
+                    const angle = i * (Math.PI / 4); // 8 arah berbeda
+                    const distance = 50;
+                    const x = Math.cos(angle) * distance;
+                    const y = Math.sin(angle) * distance;
+                    
+                    shadow.style.transform = `translate(${x}px, ${y}px)`;
+                    shadow.style.opacity = '0';
+                    
+                    flowerButton.appendChild(shadow);
+                    shadowElements.push(shadow);
+                    
+                    // Animasi bayangan
+                    setTimeout(() => {
+                        shadow.style.transition = 'all 0.5s ease-out';
+                        shadow.style.transform = `translate(${x * 2}px, ${y * 2}px)`;
+                        shadow.style.opacity = '1';
+                        
+                        setTimeout(() => {
+                            shadow.style.opacity = '0';
+                            
+                            setTimeout(() => {
+                                shadow.remove();
+                            }, 500);
+                        }, 300);
+                    }, 10);
+                }
+            });
+            
+            flowerButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Animasi pulsa klik
+                pixelButton.style.animation = 'none'; // Reset animation
+                setTimeout(() => {
+                    pixelButton.style.animation = 'clickPulse 0.5s ease-out';
+                }, 10);
+                
+                // Simpan info bahwa kita menggunakan transisi
+                localStorage.setItem('pageTransition', 'true');
+                localStorage.setItem('transitionTime', Date.now());
+                
+                // Tambahkan kelas untuk animasi terbang naik
+                document.body.classList.add('page-transition');
+                
+                // Menambahkan overlay hitam untuk mencegah flash putih
+                const overlay = document.createElement('div');
+                overlay.style.position = 'fixed';
+                overlay.style.zIndex = '9999';
+                overlay.style.top = '0';
+                overlay.style.left = '0';
+                overlay.style.width = '100%';
+                overlay.style.height = '100%';
+                overlay.style.backgroundColor = '#020408';
+                overlay.style.opacity = '0';
+                overlay.style.transition = 'opacity 0.5s ease';
+                document.body.appendChild(overlay);
+                
+                // Setelah animasi terbang naik selesai, tampilkan overlay
+                setTimeout(function() {
+                    overlay.style.opacity = '1';
+                    
+                    // Navigasi ke halaman selanjutnya setelah overlay tampil
+                    setTimeout(function() {
+                        window.location.href = flowerLink.getAttribute('href');
+                    }, 500);
+                }, 1000);
+            });
+        });
+    </script>
+</body>
+
+</html>
