@@ -468,7 +468,7 @@
         
         // Countdown timer functionality
         function updateCountdown() {
-          const targetDate = new Date('March 28, 2025 01:00:00').getTime();
+          const targetDate = new Date('March 28, 2025 01:00:00:00').getTime();
           const now = new Date().getTime();
           const difference = targetDate - now;
           
@@ -477,12 +477,14 @@
             const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+            const milliseconds = Math.floor((difference % 1000));
             
             document.getElementById('countdown').innerHTML = 
               `${days.toString().padStart(2, '0')}d : ` +
               `${hours.toString().padStart(2, '0')}h : ` +
               `${minutes.toString().padStart(2, '0')}m : ` +
-              `${seconds.toString().padStart(2, '0')}s`;
+              `${seconds.toString().padStart(2, '0')}s : ` +
+              `${milliseconds.toString().padStart(3, '0')}ms`;
           } else {
             document.getElementById('countdown').innerHTML = "We're together now! ❤️";
           }
@@ -490,7 +492,7 @@
         
         // Update the countdown every second
         updateCountdown(); // Initial call
-        setInterval(updateCountdown, 1000);
+        setInterval(updateCountdown, 10); // Update every 10ms for smooth milliseconds
         
         // Jika pengguna datang dari transisi, animasi akan dimulai lebih cepat
         const animationDelay = hasTransition ? 100 : 800;
