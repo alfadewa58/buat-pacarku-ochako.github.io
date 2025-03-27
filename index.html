@@ -490,7 +490,7 @@
             document.querySelector('.top-text').style.display = 'none';
             document.querySelector('.music-player-container').style.display = 'none';
             
-            // Show special message
+            // Show special message - versi ringan
             const specialMessage = document.createElement('div');
             specialMessage.className = 'special-message';
             specialMessage.innerHTML = `
@@ -502,13 +502,7 @@
             `;
             document.body.appendChild(specialMessage);
             
-            // Tambahkan kucing terpisah sebagai elemen independen
-            const catElement = document.createElement('div');
-            catElement.className = 'floating-cat';
-            catElement.innerHTML = '<img src="img/kucing.png" alt="Kucing">';
-            document.body.appendChild(catElement);
-            
-            // Add styles for the special message
+            // Add styles for the special message - versi ringan
             const style = document.createElement('style');
             style.textContent = `
               .special-message {
@@ -520,38 +514,6 @@
                 z-index: 1000;
                 color: #fff;
                 font-family: 'slkscr', cursive;
-              }
-              
-              /* Kucing sebagai elemen terpisah dengan posisi tetap */
-              .floating-cat {
-                position: fixed;
-                top: 15%;
-                z-index: 1000;
-                pointer-events: none; /* Agar tidak mengganggu interaksi pengguna */
-              }
-              
-              .floating-cat img {
-                width: 40px;
-                height: auto;
-                animation: horizontalFloat 20s linear infinite;
-              }
-              
-              @keyframes horizontalFloat {
-                0% { 
-                  transform: translateX(100vw) translateY(0);
-                }
-                25% {
-                  transform: translateX(75vw) translateY(-8px);
-                }
-                50% {
-                  transform: translateX(50vw) translateY(0);
-                }
-                75% {
-                  transform: translateX(25vw) translateY(-8px);
-                }
-                100% {
-                  transform: translateX(0vw) translateY(0);
-                }
               }
 
               .special-message h2 {
@@ -571,34 +533,20 @@
                 width: 150px;
                 height: auto;
                 cursor: pointer;
-                transition: all 0.3s ease;
+                transition: transform 0.3s ease;
               }
 
               .special-button:hover {
                 transform: scale(1.1);
-                opacity: 0.8;
               }
               
-              /* Animasi naik turun untuk tombol */
-              .special-button.yes {
-                animation: floatUp 3s ease-in-out infinite;
+              /* Animasi yang lebih ringan untuk tombol - tanpa infinite */
+              .special-button.yes:hover {
+                transform: scale(1.1) translateY(-5px);
               }
               
-              .special-button.no {
-                animation: floatUp 3s ease-in-out infinite;
-                animation-delay: 1.5s; /* Delay agar tidak bersamaan dengan tombol pertama */
-              }
-              
-              @keyframes floatUp {
-                0% {
-                  transform: translateY(0);
-                }
-                50% {
-                  transform: translateY(-10px);
-                }
-                100% {
-                  transform: translateY(0);
-                }
+              .special-button.no:hover {
+                transform: scale(1.1) translateY(-5px);
               }
             `;
             document.head.appendChild(style);
